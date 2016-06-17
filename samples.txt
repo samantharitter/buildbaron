@@ -1,0 +1,193 @@
+[js_test:indexbg_drop] 2016-06-16T19:23:11.038+0000 d20011| 2016-06-16T19:23:11.037+0000 E REPL     [rsBackgroundSync] NoMatchingDocument: RS100 reached beginning of remote oplog [1]
+[js_test:indexbg_drop] 2016-06-16T19:23:11.038+0000 d20011| 2016-06-16T19:23:11.037+0000 I REPL     [rsBackgroundSync] rollback finished
+[js_test:indexbg_drop] 2016-06-16T19:23:11.039+0000 d20011| 2016-06-16T19:23:11.037+0000 I -        [rsBackgroundSync] Fatal assertion 28723 UnrecoverableRollbackError: need to rollback, but unable to determine common point between local and remote oplog: NoMatchingDocument: RS100 reached beginning of remote oplog [1] @ 18752
+[js_test:indexbg_drop] 2016-06-16T19:23:11.039+0000 d20011| 2016-06-16T19:23:11.037+0000 I -        [rsBackgroundSync]
+[js_test:indexbg_drop] 2016-06-16T19:23:11.039+0000 d20011|
+[js_test:indexbg_drop] 2016-06-16T19:23:11.039+0000 d20011| ***aborting after fassert() failure
+
+[js_test:indexbg_drop] 2016-06-16T19:23:21.989+0000 2016-06-16T19:23:21.989+0000 E QUERY    [thread1] Error: error doing query: failed: network error while attempting to run command 'listIndexes' on host '127.0.0.1:20011'  :
+[js_test:indexbg_drop] 2016-06-16T19:23:21.989+0000 DB.prototype.runCommand@src/mongo/shell/db.js:132:1
+[js_test:indexbg_drop] 2016-06-16T19:23:21.989+0000 DBCollection.prototype._dbCommand@src/mongo/shell/collection.js:173:12
+[js_test:indexbg_drop] 2016-06-16T19:23:21.990+0000 DBCollection.prototype._getIndexesCommand@src/mongo/shell/collection.js:1007:15
+[js_test:indexbg_drop] 2016-06-16T19:23:21.990+0000 DBCollection.prototype.getIndexes@src/mongo/shell/collection.js:1031:15
+[js_test:indexbg_drop] 2016-06-16T19:23:21.990+0000 @jstests/noPassthroughWithMongod/indexbg_drop.js:63:17
+[js_test:indexbg_drop] 2016-06-16T19:23:21.990+0000 assert.soon@src/mongo/shell/assert.js:170:17
+[js_test:indexbg_drop] 2016-06-16T19:23:21.990+0000 @jstests/noPassthroughWithMongod/indexbg_drop.js:62:1
+[js_test:indexbg_drop] 2016-06-16T19:23:21.990+0000 
+[js_test:indexbg_drop] 2016-06-16T19:23:21.991+0000 failed to load: jstests/noPassthroughWithMongod/indexbg_drop.js
+
+
+
+
+ongoDFixture:job1] 2016-06-17T04:32:05.936+0000 I NETWORK  [conn4777] end connection 127.0.0.1:49651 (1 connection now open)
+[MongoDFixture:job1] Stopping mongod on port 20250 with pid 1028...
+[MongoDFixture:job1] Successfully terminated the mongod on port 20250, exited with code 0.
+[cpp_integration_test:network_interface_asio_integration_test] 2016-06-17T04:32:05.664+0000 2016-06-17T04:32:05.665+0000 I ASIO     [main] command failed: ExceededTimeLimit: Couldn't get a connection within the time limit
+[cpp_integration_test:network_interface_asio_integration_test] 2016-06-17T04:32:05.664+0000 2016-06-17T04:32:05.665+0000 I -        [main] 	 DONE running tests
+[cpp_integration_test:network_interface_asio_integration_test] 2016-06-17T04:32:05.664+0000 2016-06-17T04:32:05.665+0000 I -        [main] **************************************************
+[cpp_integration_test:network_interface_asio_integration_test] 2016-06-17T04:32:05.664+0000 2016-06-17T04:32:05.665+0000 I -        [main] NetworkInterfaceASIOIntegrationTest | tests:    4 | fails:    1 | assert calls:          0 | time secs: 90.732
+[cpp_integration_test:network_interface_asio_integration_test] 2016-06-17T04:32:05.664+0000 	StressTest	Expected ::mongo::Status::OK() == (res) (OK  == BadValue Expected OK but got HostUnreachable: No connection could be made because the target machine actively refused it.) @src\mongo\executor\network_interface_asio_integration_test.cpp:308
+[cpp_integration_test:network_interface_asio_integration_test] 2016-06-17T04:32:05.665+0000 2016-06-17T04:32:05.665+0000 I -        [main] TOTALS                         | tests:    4 | fails:    1 | assert calls:          0 | time secs: 90.732
+[cpp_integration_test:network_interface_asio_integration_test] 2016-06-17T04:32:05.665+0000 2016-06-17T04:32:05.665+0000 I -        [main] Failing tests:
+[cpp_integration_test:network_interface_asio_integration_test] 2016-06-17T04:32:05.665+0000 2016-06-17T04:32:05.665+0000 I -        [main] 	 NetworkInterfaceASIOIntegrationTest/StressTest Failed
+[cpp_integration_test:network_interface_asio_integration_test] 2016-06-17T04:32:05.665+0000 2016-06-17T04:32:05.665+0000 I -        [main] FAILURE - 1 tests in 1 suites failed
+
+
+Timeout Example:
+https://evergreen.mongodb.com/task/mongodb_mongo_master_ubuntu1410_debug_asan_sharding_jscore_passthrough_wire_ops_WT_4af772e1ed203d0695c8edbb2a4dddd5b2b5a359_16_06_16_15_43_24
+
+
+[js_test:reconfig_without_increased_queues] 2016-06-17T00:09:47.656+0000 d20011| 2016-06-17T00:09:47.309+0000 I REPL     [ReplicationExecutor] Error in heartbeat request to ip-10-169-240-80:20010; HostUnreachable: End of file
+[js_test:reconfig_without_increased_queues] 2016-06-17T00:09:47.656+0000 d20011| src/mongo/db/repl/topology_coordinator_impl.cpp:122:5: runtime error: signed integer overflow: 2147483647 + 1 cannot be represented in type 'int'
+...
+
+
+	
+[js_test:election_timing] 2016-06-17T19:32:27.108+0000 d20018| 2016-06-17T19:32:27.074+0000 I REPL     [ReplicationExecutor] Member ip-10-101-183-20:20016 is now in state SECONDARY
+[js_test:election_timing] 2016-06-17T19:32:27.108+0000 2016-06-17T19:32:27.076+0000 E QUERY    [thread1] Error: Error: error doing query: failed :
+[js_test:election_timing] 2016-06-17T19:32:27.108+0000 DBCollection.prototype.insert@src/mongo/shell/collection.js:354:23
+[js_test:election_timing] 2016-06-17T19:32:27.109+0000 ElectionTimingTest.prototype._runTimingTest@jstests/libs/election_timing_test.js:87:28
+[js_test:election_timing] 2016-06-17T19:32:27.109+0000 ElectionTimingTest@jstests/libs/election_timing_test.js:45:5
+[js_test:election_timing] 2016-06-17T19:32:27.109+0000 @jstests/serial_run/election_timing.js:108:23
+[js_test:election_timing] 2016-06-17T19:32:27.109+0000 @jstests/serial_run/election_timing.js:107:5
+[js_test:election_timing] 2016-06-17T19:32:27.109+0000 @jstests/serial_run/election_timing.js:4:2
+[js_test:election_timing] 2016-06-17T19:32:27.109+0000 
+
+
+
+[js_test:dumprestore_sharded] 2016-06-17T20:57:41.442+0000 sh21273| 2016-06-17T20:57:41.442+0000	restoring indexes for collection jstests_tool_dumprestore_sharded.cappedColl from metadata
+[js_test:dumprestore_sharded] 2016-06-17T20:57:41.442+0000 sh21273| unexpected fault address 0x0
+[js_test:dumprestore_sharded] 2016-06-17T20:57:41.444+0000 sh21273| fatal error: fault
+[js_test:dumprestore_sharded] 2016-06-17T20:57:41.444+0000 sh21273| [signal 0xb code=0x80 addr=0x0]
+[js_test:dumprestore_sharded] 2016-06-17T20:57:41.445+0000 sh21273|
+[js_test:dumprestore_sharded] 2016-06-17T20:57:41.445+0000 sh21273| goroutine 33 [running]:
+[js_test:dumprestore_sharded] 2016-06-17T20:57:41.445+0000 sh21273| runtime_dopanic
+[js_test:dumprestore_sharded] 2016-06-17T20:57:41.445+0000 sh21273| 	../../../gcc-5.3.0/libgo/runtime/panic.c:131
+[js_test:dumprestore_sharded] 2016-06-17T20:57:41.445+0000 sh21273| runtime_throw
+[js_test:dumprestore_sharded] 2016-06-17T20:57:41.446+0000 sh21273| 	../../../gcc-5.3.0/libgo/runtime/panic.c:193
+[js_test:dumprestore_sharded] 2016-06-17T20:57:41.446+0000 sh21273| sig_panic_info_handler
+[js_test:dumprestore_sharded] 2016-06-17T20:57:41.446+0000 sh21273| 	../../../gcc-5.3.0/libgo/runtime/go-signal.c:292
+[js_test:dumprestore_sharded] 2016-06-17T20:57:41.446+0000 sh21273|
+[js_test:dumprestore_sharded] 2016-06-17T20:57:41.446+0000 sh21273| 	:0
+[js_test:dumprestore_sharded] 2016-06-17T20:57:41.446+0000 sh21273|
+[js_test:dumprestore_sharded] 2016-06-17T20:57:41.447+0000 sh21273| 	:0
+[js_test:dumprestore_sharded] 2016-06-17T20:57:41.447+0000 sh21273| __go_strings_equal
+[js_test:dumprestore_sharded] 2016-06-17T20:57:41.447+0000 sh21273| 	../../../gcc-5.3.0/libgo/runtime/go-string.h:16
+[js_test:dumprestore_sharded] 2016-06-17T20:57:41.447+0000 sh21273| __go_ptr_strings_equal
+[js_test:dumprestore_sharded] 2016-06-17T20:57:41.447+0000 sh21273| 	../../../gcc-5.3.0/libgo/runtime/go-string.h:26
+[js_test:dumprestore_sharded] 2016-06-17T20:57:41.448+0000 sh21273| __go_type_equal_string
+[js_test:dumprestore_sharded] 2016-06-17T20:57:41.448+0000 sh21273| 	../../../gcc-5.3.0/libgo/runtime/go-type-string.c:42
+[js_test:dumprestore_sharded] 2016-06-17T20:57:41.448+0000 sh21273| __go_map_index
+[js_test:dumprestore_sharded] 2016-06-17T20:57:41.448+0000 sh21273| 	../../../gcc-5.3.0/libgo/runtime/go-map-index.c:112
+[js_test:dumprestore_sharded] 2016-06-17T20:57:41.448+0000 sh21273| github_com_mongodb_mongo_tools_mongorestore.CreateIndexes.pN56_github_com_mongodb_mongo_tools_mongorestore.MongoRestore
+[js_test:dumprestore_sharded] 2016-06-17T20:57:41.449+0000 sh21273| 	/srv/10gen/mci-exec/mci/404ed2e405ac81c1c82b74bd520c8e72/src/mongo-tools/.gopath/src/github.com/mongodb/mongo-tools/mongorestore/metadata.go:176
+[js_test:dumprestore_sharded] 2016-06-17T20:57:41.449+0000 sh21273| github_com_mongodb_mongo_tools_mongorestore.RestoreIntent.pN56_github_com_mongodb_mongo_tools_mongorestore.MongoRestore
+[js_test:dumprestore_sharded] 2016-06-17T20:57:41.450+0000 sh21273| 	/srv/10gen/mci-exec/mci/404ed2e405ac81c1c82b74bd520c8e72/src/mongo-tools/.gopath/src/github.com/mongodb/mongo-tools/mongorestore/restore.go:180
+[js_test:dumprestore_sharded] 2016-06-17T20:57:41.450+0000 sh21273| mongorestore.$nested1
+[js_test:dumprestore_sharded] 2016-06-17T20:57:41.450+0000 sh21273| 	/srv/10gen/mci-exec/mci/404ed2e405ac81c1c82b74bd520c8e72/src/mongo-tools/.gopath/src/github.com/mongodb/mongo-tools/mongorestore/restore.go:45
+[js_test:dumprestore_sharded] 2016-06-17T20:57:41.451+0000 sh21273| kickoff
+[js_test:dumprestore_sharded] 2016-06-17T20:57:41.451+0000 sh21273| 	../../../gcc-5.3.0/libgo/runtime/proc.c:235
+[js_test:dumprestore_sharded] 2016-06-17T20:57:41.451+0000 sh21273| created by github_com_mongodb_mongo_tools_mongorestore.RestoreIntents.pN56_github_com_mongodb_mongo_tools_mongorestore.MongoRestore
+[js_test:dumprestore_sharded] 2016-06-17T20:57:41.452+0000 sh21273| 	/srv/10gen/mci-exec/mci/404ed2e405ac81c1c82b74bd520c8e72/src/mongo-tools/.gopath/src/github.com/mongodb/mongo-tools/mongorestore/restore.go:36
+[js_test:dumprestore_sharded] 2016-06-17T20:57:41.452+0000 sh21273|
+[js_test:dumprestore_sharded] 2016-06-17T20:57:41.452+0000 sh21273| goroutine 16 [chan receive]:
+[js_test:dumprestore_sharded] 2016-06-17T20:57:41.452+0000 sh21273| github_com_mongodb_mongo_tools_mongorestore.RestoreIntents.pN56_github_com_mongodb_mongo_tools_mongorestore.MongoRestore
+[js_test:dumprestore_sharded] 2016-06-17T20:57:41.453+0000 sh21273| 	/srv/10gen/mci-exec/mci/404ed2e405ac81c1c82b74bd520c8e72/src/mongo-tools/.gopath/src/github.com/mongodb/mongo-tools/mongorestore/restore.go:57
+[js_test:dumprestore_sharded] 2016-06-17T20:57:41.453+0000 sh21273| github_com_mongodb_mongo_tools_mongorestore.Restore.pN56_github_com_mongodb_mongo_tools_mongorestore.MongoRestore
+[js_test:dumprestore_sharded] 2016-06-17T20:57:41.454+0000 sh21273| 	/srv/10gen/mci-exec/mci/404ed2e405ac81c1c82b74bd520c8e72/src/mongo-tools/.gopath/src/github.com/mongodb/mongo-tools/mongorestore/mongorestore.go:368
+[js_test:dumprestore_sharded] 2016-06-17T20:57:41.454+0000 sh21273| main.main
+[js_test:dumprestore_sharded] 2016-06-17T20:57:41.454+0000 sh21273| 	/srv/10gen/mci-exec/mci/404ed2e405ac81c1c82b74bd520c8e72/src/mongo-tools/mongorestore/main/mongorestore.go:71
+[js_test:dumprestore_sharded] 2016-06-17T20:57:41.454+0000 sh21273| created by main
+[js_test:dumprestore_sharded] 2016-06-17T20:57:41.455+0000 sh21273| 	../../../gcc-5.3.0/libgo/runtime/go-main.c:48
+[js_test:dumprestore_sharded] 2016-06-17T20:57:41.455+0000 sh21273|
+[js_test:dumprestore_sharded] 2016-06-17T20:57:41.455+0000 sh21273| goroutine 18 [finalizer wait]:
+[js_test:dumprestore_sharded] 2016-06-17T20:57:41.455+0000 sh21273| created by runtime_createfing
+[js_test:dumprestore_sharded] 2016-06-17T20:57:41.455+0000 sh21273| 	../../../gcc-5.3.0/libgo/runtime/mgc0.c:2572
+[js_test:dumprestore_sharded] 2016-06-17T20:57:41.456+0000 sh21273|
+[js_test:dumprestore_sharded] 2016-06-17T20:57:41.456+0000 sh21273| goroutine 19 [syscall]:
+[js_test:dumprestore_sharded] 2016-06-17T20:57:41.456+0000 sh21273| 	goroutine in C code; stack unavailable
+[js_test:dumprestore_sharded] 2016-06-17T20:57:41.456+0000 sh21273| created by os_signal..import
+[js_test:dumprestore_sharded] 2016-06-17T20:57:41.456+0000 sh21273| 	../../../gcc-5.3.0/libgo/go/os/signal/signal_unix.go:25
+[js_test:dumprestore_sharded] 2016-06-17T20:57:41.457+0000 sh21273|
+[js_test:dumprestore_sharded] 2016-06-17T20:57:41.457+0000 sh21273| goroutine 21 [sleep]:
+[js_test:dumprestore_sharded] 2016-06-17T20:57:41.457+0000 sh21273| gopkg_in_mgo_v2.syncServersLoop.pN28_gopkg_in_mgo_v2.mongoCluster
+[js_test:dumprestore_sharded] 2016-06-17T20:57:41.457+0000 sh21273| 	/srv/10gen/mci-exec/mci/404ed2e405ac81c1c82b74bd520c8e72/src/mongo-tools/vendor/src/gopkg.in/mgo.v2/cluster.go:368
+[js_test:dumprestore_sharded] 2016-06-17T20:57:41.458+0000 sh21273| created by mgo.newCluster
+[js_test:dumprestore_sharded] 2016-06-17T20:57:41.458+0000 sh21273| 	/srv/10gen/mci-exec/mci/404ed2e405ac81c1c82b74bd520c8e72/src/mongo-tools/vendor/src/gopkg.in/mgo.v2/cluster.go:78
+[js_test:dumprestore_sharded] 2016-06-17T20:57:41.458+0000 sh21273|
+[js_test:dumprestore_sharded] 2016-06-17T20:57:41.458+0000 sh21273| goroutine 24 [sleep]:
+[js_test:dumprestore_sharded] 2016-06-17T20:57:41.458+0000 sh21273| gopkg_in_mgo_v2.pinger.pN27_gopkg_in_mgo_v2.mongoServer
+[js_test:dumprestore_sharded] 2016-06-17T20:57:41.459+0000 sh21273| 	/srv/10gen/mci-exec/mci/404ed2e405ac81c1c82b74bd520c8e72/src/mongo-tools/vendor/src/gopkg.in/mgo.v2/server.go:296
+[js_test:dumprestore_sharded] 2016-06-17T20:57:41.459+0000 sh21273| created by mgo.newServer
+[js_test:dumprestore_sharded] 2016-06-17T20:57:41.459+0000 sh21273| 	/srv/10gen/mci-exec/mci/404ed2e405ac81c1c82b74bd520c8e72/src/mongo-tools/vendor/src/gopkg.in/mgo.v2/server.go:89
+[js_test:dumprestore_sharded] 2016-06-17T20:57:41.459+0000 sh21273|
+[js_test:dumprestore_sharded] 2016-06-17T20:57:41.459+0000 sh21273| goroutine 25 [IO wait]:
+[js_test:dumprestore_sharded] 2016-06-17T20:57:41.459+0000 sh21273| net.runtime_pollWait
+[js_test:dumprestore_sharded] 2016-06-17T20:57:41.459+0000 sh21273| 	../../../gcc-5.3.0/libgo/runtime/netpoll.goc:151
+[js_test:dumprestore_sharded] 2016-06-17T20:57:41.460+0000 sh21273| net.Wait.pN12_net.pollDesc
+[js_test:dumprestore_sharded] 2016-06-17T20:57:41.460+0000 sh21273| 	../../../gcc-5.3.0/libgo/go/net/fd_poll_runtime.go:84
+[js_test:dumprestore_sharded] 2016-06-17T20:57:41.460+0000 sh21273| net.WaitRead.pN12_net.pollDesc
+[js_test:dumprestore_sharded] 2016-06-17T20:57:41.460+0000 sh21273| 	../../../gcc-5.3.0/libgo/go/net/fd_poll_runtime.go:89
+[js_test:dumprestore_sharded] 2016-06-17T20:57:41.460+0000 sh21273| net.Read.pN9_net.netFD
+[js_test:dumprestore_sharded] 2016-06-17T20:57:41.461+0000 sh21273| 	../../../gcc-5.3.0/libgo/go/net/fd_unix.go:242
+[js_test:dumprestore_sharded] 2016-06-17T20:57:41.461+0000 sh21273| net.Read.pN8_net.conn
+[js_test:dumprestore_sharded] 2016-06-17T20:57:41.461+0000 sh21273| 	../../../gcc-5.3.0/libgo/go/net/net.go:121
+[js_test:dumprestore_sharded] 2016-06-17T20:57:41.461+0000 sh21273| net.Read.pN11_net.TCPConn
+[js_test:dumprestore_sharded] 2016-06-17T20:57:41.461+0000 sh21273| 	../../../gcc-5.3.0/libgo/go/net/tcpsock_posix.go:57
+[js_test:dumprestore_sharded] 2016-06-17T20:57:41.461+0000 sh21273| mgo.fill
+[js_test:dumprestore_sharded] 2016-06-17T20:57:41.462+0000 sh21273| 	/srv/10gen/mci-exec/mci/404ed2e405ac81c1c82b74bd520c8e72/src/mongo-tools/vendor/src/gopkg.in/mgo.v2/socket.go:530
+[js_test:dumprestore_sharded] 2016-06-17T20:57:41.462+0000 sh21273| gopkg_in_mgo_v2.readLoop.pN27_gopkg_in_mgo_v2.mongoSocket
+[js_test:dumprestore_sharded] 2016-06-17T20:57:41.462+0000 sh21273| 	/srv/10gen/mci-exec/mci/404ed2e405ac81c1c82b74bd520c8e72/src/mongo-tools/vendor/src/gopkg.in/mgo.v2/socket.go:547
+[js_test:dumprestore_sharded] 2016-06-17T20:57:41.462+0000 sh21273| created by mgo.newSocket
+[js_test:dumprestore_sharded] 2016-06-17T20:57:41.462+0000 sh21273| 	/srv/10gen/mci-exec/mci/404ed2e405ac81c1c82b74bd520c8e72/src/mongo-tools/vendor/src/gopkg.in/mgo.v2/socket.go:194
+[js_test:dumprestore_sharded] 2016-06-17T20:57:41.463+0000 sh21273|
+[js_test:dumprestore_sharded] 2016-06-17T20:57:41.463+0000 sh21273| goroutine 26 [chan receive]:
+[js_test:dumprestore_sharded] 2016-06-17T20:57:41.463+0000 sh21273| github_com_mongodb_mongo_tools_mongorestore.handleSignals.pN56_github_com_mongodb_mongo_tools_mongorestore.MongoRestore
+[js_test:dumprestore_sharded] 2016-06-17T20:57:41.463+0000 sh21273| 	/srv/10gen/mci-exec/mci/404ed2e405ac81c1c82b74bd520c8e72/src/mongo-tools/.gopath/src/github.com/mongodb/mongo-tools/mongorestore/mongorestore.go:447
+[js_test:dumprestore_sharded] 2016-06-17T20:57:41.464+0000 sh21273| created by github_com_mongodb_mongo_tools_mongorestore.Restore.pN56_github_com_mongodb_mongo_tools_mongorestore.MongoRestore
+[js_test:dumprestore_sharded] 2016-06-17T20:57:41.464+0000 sh21273| 	/srv/10gen/mci-exec/mci/404ed2e405ac81c1c82b74bd520c8e72/src/mongo-tools/.gopath/src/github.com/mongodb/mongo-tools/mongorestore/mongorestore.go:366
+[js_test:dumprestore_sharded] 2016-06-17T20:57:41.464+0000 sh21273|
+[js_test:dumprestore_sharded] 2016-06-17T20:57:41.464+0000 sh21273| goroutine 27 [select]:
+[js_test:dumprestore_sharded] 2016-06-17T20:57:41.464+0000 sh21273| github_com_mongodb_mongo_tools_common_progress.start.pN54_github_com_mongodb_mongo_tools_common_progress.Manager
+[js_test:dumprestore_sharded] 2016-06-17T20:57:41.465+0000 sh21273| 	/srv/10gen/mci-exec/mci/404ed2e405ac81c1c82b74bd520c8e72/src/mongo-tools/.gopath/src/github.com/mongodb/mongo-tools/common/progress/manager.go:126
+[js_test:dumprestore_sharded] 2016-06-17T20:57:41.465+0000 sh21273| created by github_com_mongodb_mongo_tools_common_progress.Start.pN54_github_com_mongodb_mongo_tools_common_progress.Manager
+[js_test:dumprestore_sharded] 2016-06-17T20:57:41.465+0000 sh21273| 	/srv/10gen/mci-exec/mci/404ed2e405ac81c1c82b74bd520c8e72/src/mongo-tools/.gopath/src/github.com/mongodb/mongo-tools/common/progress/manager.go:115
+[js_test:dumprestore_sharded] 2016-06-17T20:57:41.465+0000 sh21273|
+[js_test:dumprestore_sharded] 2016-06-17T20:57:41.465+0000 sh21273| goroutine 34 [semacquire]:
+[js_test:dumprestore_sharded] 2016-06-17T20:57:41.466+0000 sh21273| sync.Lock.pN10_sync.Mutex
+[js_test:dumprestore_sharded] 2016-06-17T20:57:41.466+0000 sh21273| 	../../../gcc-5.3.0/libgo/go/sync/mutex.go:66
+[js_test:dumprestore_sharded] 2016-06-17T20:57:41.466+0000 sh21273| gopkg_in_mgo_v2.SimpleQuery.pN27_gopkg_in_mgo_v2.mongoSocket
+[js_test:dumprestore_sharded] 2016-06-17T20:57:41.466+0000 sh21273| 	/srv/10gen/mci-exec/mci/404ed2e405ac81c1c82b74bd520c8e72/src/mongo-tools/vendor/src/gopkg.in/mgo.v2/socket.go:367
+[js_test:dumprestore_sharded] 2016-06-17T20:57:41.466+0000 sh21273| gopkg_in_mgo_v2.run.pN24_gopkg_in_mgo_v2.Database
+[js_test:dumprestore_sharded] 2016-06-17T20:57:41.467+0000 sh21273| 	/srv/10gen/mci-exec/mci/404ed2e405ac81c1c82b74bd520c8e72/src/mongo-tools/vendor/src/gopkg.in/mgo.v2/session.go:3022
+[js_test:dumprestore_sharded] 2016-06-17T20:57:41.467+0000 sh21273| gopkg_in_mgo_v2.Run.pN24_gopkg_in_mgo_v2.Database
+[js_test:dumprestore_sharded] 2016-06-17T20:57:41.467+0000 sh21273| 	/srv/10gen/mci-exec/mci/404ed2e405ac81c1c82b74bd520c8e72/src/mongo-tools/vendor/src/gopkg.in/mgo.v2/session.go:638
+[js_test:dumprestore_sharded] 2016-06-17T20:57:41.467+0000 sh21273| github_com_mongodb_mongo_tools_mongorestore.CreateCollection.pN56_github_com_mongodb_mongo_tools_mongorestore.MongoRestore
+[js_test:dumprestore_sharded] 2016-06-17T20:57:41.468+0000 sh21273| 	/srv/10gen/mci-exec/mci/404ed2e405ac81c1c82b74bd520c8e72/src/mongo-tools/.gopath/src/github.com/mongodb/mongo-tools/mongorestore/metadata.go:258
+[js_test:dumprestore_sharded] 2016-06-17T20:57:41.468+0000 sh21273| github_com_mongodb_mongo_tools_mongorestore.RestoreIntent.pN56_github_com_mongodb_mongo_tools_mongorestore.MongoRestore
+[js_test:dumprestore_sharded] 2016-06-17T20:57:41.468+0000 sh21273| 	/srv/10gen/mci-exec/mci/404ed2e405ac81c1c82b74bd520c8e72/src/mongo-tools/.gopath/src/github.com/mongodb/mongo-tools/mongorestore/restore.go:150
+[js_test:dumprestore_sharded] 2016-06-17T20:57:41.468+0000 sh21273| mongorestore.$nested1
+[js_test:dumprestore_sharded] 2016-06-17T20:57:41.469+0000 sh21273| 	/srv/10gen/mci-exec/mci/404ed2e405ac81c1c82b74bd520c8e72/src/mongo-tools/.gopath/src/github.com/mongodb/mongo-tools/mongorestore/restore.go:45
+[js_test:dumprestore_sharded] 2016-06-17T20:57:41.469+0000 sh21273| created by github_com_mongodb_mongo_tools_mongorestore.RestoreIntents.pN56_github_com_mongodb_mongo_tools_mongorestore.MongoRestore
+[js_test:dumprestore_sharded] 2016-06-17T20:57:41.469+0000 sh21273| 	/srv/10gen/mci-exec/mci/404ed2e405ac81c1c82b74bd520c8e72/src/mongo-tools/.gopath/src/github.com/mongodb/mongo-tools/mongorestore/restore.go:36
+[js_test:dumprestore_sharded] 2016-06-17T20:57:41.469+0000 sh21273|
+[js_test:dumprestore_sharded] 2016-06-17T20:57:41.469+0000 sh21273| goroutine 29 [IO wait]:
+[js_test:dumprestore_sharded] 2016-06-17T20:57:41.470+0000 sh21273| net.runtime_pollWait
+[js_test:dumprestore_sharded] 2016-06-17T20:57:41.470+0000 sh21273| 	../../../gcc-5.3.0/libgo/runtime/netpoll.goc:151
+[js_test:dumprestore_sharded] 2016-06-17T20:57:41.470+0000 sh21273| net.Wait.pN12_net.pollDesc
+[js_test:dumprestore_sharded] 2016-06-17T20:57:41.470+0000 sh21273| 	../../../gcc-5.3.0/libgo/go/net/fd_poll_runtime.go:84
+[js_test:dumprestore_sharded] 2016-06-17T20:57:41.470+0000 sh21273| net.WaitRead.pN12_net.pollDesc
+[js_test:dumprestore_sharded] 2016-06-17T20:57:41.470+0000 sh21273| 	../../../gcc-5.3.0/libgo/go/net/fd_poll_runtime.go:89
+[js_test:dumprestore_sharded] 2016-06-17T20:57:41.470+0000 sh21273| net.Read.pN9_net.netFD
+[js_test:dumprestore_sharded] 2016-06-17T20:57:41.471+0000 sh21273| 	../../../gcc-5.3.0/libgo/go/net/fd_unix.go:242
+[js_test:dumprestore_sharded] 2016-06-17T20:57:41.471+0000 sh21273| net.Read.pN8_net.conn
+[js_test:dumprestore_sharded] 2016-06-17T20:57:41.471+0000 sh21273| 	../../../gcc-5.3.0/libgo/go/net/net.go:121
+[js_test:dumprestore_sharded] 2016-06-17T20:57:41.471+0000 sh21273| net.Read.pN11_net.TCPConn
+[js_test:dumprestore_sharded] 2016-06-17T20:57:41.471+0000 sh21273| 	../../../gcc-5.3.0/libgo/go/net/tcpsock_posix.go:57
+[js_test:dumprestore_sharded] 2016-06-17T20:57:41.471+0000 sh21273| mgo.fill
+[js_test:dumprestore_sharded] 2016-06-17T20:57:41.472+0000 sh21273| 	/srv/10gen/mci-exec/mci/404ed2e405ac81c1c82b74bd520c8e72/src/mongo-tools/vendor/src/gopkg.in/mgo.v2/socket.go:530
+[js_test:dumprestore_sharded] 2016-06-17T20:57:41.472+0000 sh21273| gopkg_in_mgo_v2.readLoop.pN27_gopkg_in_mgo_v2.mongoSocket
+[js_test:dumprestore_sharded] 2016-06-17T20:57:41.472+0000 sh21273| 	/srv/10gen/mci-exec/mci/404ed2e405ac81c1c82b74bd520c8e72/src/mongo-tools/vendor/src/gopkg.in/mgo.v2/socket.go:547
+[js_test:dumprestore_sharded] 2016-06-17T20:57:41.472+0000 sh21273| created by mgo.newSocket
+[js_test:dumprestore_sharded] 2016-06-17T20:57:41.472+0000 sh21273| 	/srv/10gen/mci-exec/mci/404ed2e405ac81c1c82b74bd520c8e72/src/mongo-tools/vendor/src/gopkg.in/mgo.v2/socket.go:194
+[js_test:dumpresto
