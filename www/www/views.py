@@ -6,14 +6,17 @@ import json
 from datetime import datetime
 from flask import render_template, g
 from www import app
+import os
 
 @app.route('/')
 @app.route('/home')
 def home():
     """Renders the home page."""
-    
-       
-    with open("d:\\buildbaron\\failed_tests.json", "rb") as sjh:
+
+
+    lib_path = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(os.path.realpath(__file__)))))
+    print lib_path
+    with open(os.path.join(lib_path, "failed_tests.json"), "rb") as sjh:
         failed_tests = json.load(sjh)
 
     return render_template(

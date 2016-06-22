@@ -46,7 +46,7 @@ if __name__ == '__main__':
     #with app.app_context():
         #tests = g.get('tests', None)
         #g.setdefault('failed_tests', failed_tests)
-       
+
     def format_log(s):
         return s.replace("\n", "<br/>")
     app.jinja_env.filters['format_log'] = format_log
@@ -60,7 +60,7 @@ if __name__ == '__main__':
         return digest64
 
     app.jinja_env.filters['hash_name'] = hash_name
-    
+
     def tohtml_logurl(s):
         idx = s.find("?")
         if idx != -1:
@@ -68,6 +68,6 @@ if __name__ == '__main__':
         return s
 
     app.jinja_env.filters['tohtml_logurl'] = tohtml_logurl
-    
 
-    app.run(HOST, PORT)
+
+    app.run(HOST, PORT, debug=True)
