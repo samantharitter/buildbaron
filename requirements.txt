@@ -1,0 +1,3 @@
+jira
+gitpython
+Flask<1

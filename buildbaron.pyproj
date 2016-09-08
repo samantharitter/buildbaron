@@ -11,9 +11,9 @@
     <OutputPath>.</OutputPath>
     <ProjectTypeGuids>{888888a0-9f3d-457c-b088-3a5042f75d52}</ProjectTypeGuids>
     <LaunchProvider>Standard Python launcher</LaunchProvider>
-    <InterpreterId />
-    <InterpreterVersion />
-    <CommandLineArguments>d:\buildbaron\cache\\6dba0e18f6e19f64eff7ce9866c28c4125e31ac4\test.log</CommandLineArguments>
+    <InterpreterId>{9a7a9026-48c1-4688-9d5d-e5699d47d074}</InterpreterId>
+    <InterpreterVersion>3.5</InterpreterVersion>
+    <CommandLineArguments>cache\dab034af77b8fc5362babd23e7a6514ce4e31a8c\test.log</CommandLineArguments>
     <EnableNativeCodeDebugging>False</EnableNativeCodeDebugging>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'" />
@@ -27,7 +27,11 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="analyzer\evergreen_analyzer.py" />
+    <Compile Include="analyzer\jira_analyzer.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="analyzer\log_file_analyzer.py" />
+    <Compile Include="gdb_deadlock_analyzer.py" />
     <Compile Include="win_deadlock_analyzer.py">
       <SubType>Code</SubType>
     </Compile>
@@ -41,7 +45,11 @@
     <Folder Include="analyzer\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="requirements.txt" />
     <Content Include="samples.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <InterpreterReference Include="{9a7a9026-48c1-4688-9d5d-e5699d47d074}\3.5" />
   </ItemGroup>
   <Import Project="$(PtvsTargetsFile)" Condition="Exists($(PtvsTargetsFile))" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.Common.targets" Condition="!Exists($(PtvsTargetsFile))" />

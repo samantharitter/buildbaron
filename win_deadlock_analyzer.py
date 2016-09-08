@@ -17,7 +17,7 @@ def parse_log(file):
     cur_stack = []
     stack_num = 0
     in_stacks = 0
-    print "Staring Analysis"
+    print("Staring Analysis")
 
     while True:
         curLine = file.readline()
@@ -50,16 +50,20 @@ def parse_log(file):
             in_stacks = 0
 
             # Summarize
-            stacks_set = set(stacks)
+            stack_map = {}
+            for stack in stacks:
+                if stack not in stack_map:
+                    stack_map[stack] = 0
+                stack_map[stack] = stack_map[stack] + 1
 
-            print "**************************************"
-            print "**************************************"
-            print "Unique stacks: " + str(len(stacks_set)) + " of " + str(len(stacks))
-            print "**************************************"
+            print("======================================")
+            print("--------------------------------------")
+            print("Unique stacks: " + str(len(stack_map)) + " of ") + str(len(stacks))
+            print("======================================")
 
-            for stack in stacks_set:
-                print "--------------"
-                print "\n".join(string.split(stack, ";"))
+            for stack in stack_map:
+                print("-------------- Count: %d") % (stack_map[stack])
+                print("\n".join(string.split(stack, ";")))
 
             stacks = []
 
@@ -67,7 +71,7 @@ def parse_log(file):
             if curLine.startswith("Child-SP"):
                 #New Stack
                 # cur_stack.reverse()
-                #print "stck"
+                #print("stck")
                 stack_str = string.join(cur_stack, ";") 
                 stacks.append(stack_str)
         

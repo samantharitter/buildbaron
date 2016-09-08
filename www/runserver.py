@@ -15,14 +15,14 @@ if __name__ == "__main__" and __package__ is None:
     lib_path = os.path.dirname(os.path.dirname(os.path.abspath(os.path.realpath(__file__))))
     print(lib_path)
     sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(os.path.realpath(__file__)))))
-    print sys.path
+    print(sys.path)
 
 #from buildbaron.www import analyzer
 #import buildbaron.analyzer
 #from buildbaron import analyzer
 import analyzer
 
-print dir(analyzer)
+print(dir(analyzer))
 
 global failed_tests
 failed_tests = [ { 'test' : "foo", "log" : "Some File" } ]
@@ -54,9 +54,9 @@ if __name__ == '__main__':
     def hash_name(s):
         a = s.replace("\\", "_").replace("/", "_")
         m = hashlib.sha1()
-        m.update(a)
+        m.update(a.encode())
         digest = m.digest()
-        digest64 = binascii.b2a_hex(digest)
+        digest64 = binascii.b2a_hex(digest).decode()
         return digest64
 
     app.jinja_env.filters['hash_name'] = hash_name

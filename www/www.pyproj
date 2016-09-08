@@ -18,6 +18,8 @@
     <PythonWsgiHandler>$(MSBuildProjectName).app</PythonWsgiHandler>
     <Name>www</Name>
     <RootNamespace>www</RootNamespace>
+    <InterpreterId>{9a7a9026-48c1-4688-9d5d-e5699d47d074}</InterpreterId>
+    <InterpreterVersion>3.5</InterpreterVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
@@ -29,17 +31,12 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="runserver.py" />
-    <Compile Include="www\analyzer\downloader.py" />
-    <Compile Include="www\analyzer\evg_analyzer.py" />
-    <Compile Include="www\analyzer\log_file_analyzer.py" />
-    <Compile Include="www\analyzer\__init__.py" />
     <Compile Include="www\__init__.py" />
     <Compile Include="www\views.py" />
     <Compile Include="__init__.py" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="www\" />
-    <Folder Include="www\analyzer\" />
     <Folder Include="www\static\" />
     <Folder Include="www\static\content\" />
     <Folder Include="www\static\content\table\" />
@@ -149,6 +146,9 @@
     <Content Include="www\templates\contact.html" />
     <Content Include="www\templates\index.html" />
     <Content Include="www\templates\layout.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <InterpreterReference Include="{9a7a9026-48c1-4688-9d5d-e5699d47d074}\3.5" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.Web.targets" />
   <!-- Specify pre- and post-build commands in the BeforeBuild and 

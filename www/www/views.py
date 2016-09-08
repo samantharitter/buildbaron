@@ -15,9 +15,10 @@ def home():
 
 
     lib_path = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(os.path.realpath(__file__)))))
-    print lib_path
+    print(lib_path)
     with open(os.path.join(lib_path, "failed_tests.json"), "rb") as sjh:
-        failed_tests = json.load(sjh)
+        contents = sjh.read().decode('utf-8')
+        failed_tests = json.loads(contents)
 
     return render_template(
         'index.html',

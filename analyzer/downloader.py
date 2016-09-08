@@ -81,7 +81,7 @@ def process_log(url):
 versions_url = "https://evergreen.mongodb.com/rest/v1/projects/mongodb-mongo-master/versions"
 
 for failed_task in get_failed_tasks(versions_url):
-    print failed_task
+    print(failed_task)
     tasks_url = "https://evergreen.mongodb.com/rest/v1/tasks/"+failed_task['task_id']
     for failed_test in get_failed_tests(tasks_url):
         print(" ")
