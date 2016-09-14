@@ -1,3 +1,5 @@
 jira
 gitpython
 Flask<1
+keyring
+python-dateutil

@@ -143,6 +143,7 @@
     <Content Include="www\static\scripts\respond.min.js" />
     <Content Include="www\static\scripts\_references.js" />
     <Content Include="www\templates\about.html" />
+    <Content Include="www\templates\failure.html" />
     <Content Include="www\templates\contact.html" />
     <Content Include="www\templates\index.html" />
     <Content Include="www\templates\layout.html" />

@@ -10,6 +10,8 @@ import sys
 import os
 import hashlib
 import binascii
+import datetime
+import dateutil.parser
 
 if __name__ == "__main__" and __package__ is None:
     lib_path = os.path.dirname(os.path.dirname(os.path.abspath(os.path.realpath(__file__))))
@@ -47,6 +49,8 @@ if __name__ == '__main__':
         #tests = g.get('tests', None)
         #g.setdefault('failed_tests', failed_tests)
 
+    # Various filters for Jinja 2
+    #
     def format_log(s):
         return s.replace("\n", "<br/>")
     app.jinja_env.filters['format_log'] = format_log
@@ -69,5 +73,13 @@ if __name__ == '__main__':
 
     app.jinja_env.filters['tohtml_logurl'] = tohtml_logurl
 
+    def format_date(d):
+        # Example: 2015-04-14T16:05:07.000+0000
+        return dateutil.parser.parse(d).strftime("%b %e, %Y")
 
-    app.run(HOST, PORT, debug=True)
+    app.jinja_env.filters['date'] = format_date
+
+    app.config["TEMPLATES_AUTO_RELOAD"] = True
+
+    app.run(HOST, PORT, debug=False)
+    #app.run(HOST, PORT, debug=True)

@@ -114,7 +114,7 @@ def process_log(failed_test):
 
     if not os.path.exists(log_file):
         if failed_test["log_url"].startswith("?"): # jepsen failures
-            with open(log_file, "wb") as th:
+            with open(log_file, "w") as th:
                 th.write("Jepsen analysis not supported by log_file_analyzer.py\n")
         else:
             print("Downloading file")

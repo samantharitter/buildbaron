@@ -26,6 +26,7 @@
                     <td>{{failed_test["test"]["task_id"]}}
                         <div class="container">
                             <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#{{(failed_test["test"]["task_id"] + failed_test["test"]["test"])|hash_name}}">Expand Details</button>
+                            <a href="failure?task_id={{failed_test["test"]["task_id"]}}&build_id={{failed_test["test"]["task_name"]}}&test_name={{failed_test["test"]["test"]}}">Failure Details View</a>
                             <div id="{{(failed_test["test"]["task_id"] + failed_test["test"]["test"])|hash_name}}" class="collapse">
                                 <a href="https://evergreen.mongodb.com/task/{{failed_test["test"]["task_id"]}}">Task Page</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="{{failed_test["test"]["log_url"]}}">Raw Log File</a><br/>
                                 {% if failed_test["summary"]["faults"] %}

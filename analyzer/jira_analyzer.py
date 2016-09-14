@@ -51,12 +51,14 @@ class jira_analyzer(object):
         # my top 5 issues due by the end of the week, ordered by priority
         search = " or ".join([ 'text~"%s"' % f for f in fields])
 
-        results = self.jira.search_issues(search, maxResults=10)
+        results = self.jira.search_issues(search)
 
 
         # TODO get fields
 
         print(len(results))
+
+        return results
 
     def compute_likelyhood(results):
         return 0.1;
