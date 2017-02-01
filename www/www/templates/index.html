@@ -41,7 +41,7 @@
                                         <br/>
                                     {% endfor %}
                                 {% else  %}
-                                <b>TODO: add support for analyzing this failure</b><pre>python analyzer\log_file_analyzer.py {{failed_bf["test"]["cache"]}}\test.log</pre><br/>
+                                <b>TODO: add support for analyzing this failure</b><pre>python analyzer/log_file_analyzer.py {{failed_bf["test"]["cache"]}}\test.log</pre><br/>
                                 {% endif %}
                                 {% if failed_bf["summary"]["contexts"] %}
                                     <b>Additional Context</b><br />
@@ -52,7 +52,7 @@
                                     {% endfor %}
                                 <b>Contexts???</b>
                                 {% else  %}
-                                <b>TODO: add support for adding context to this failure</b><pre>python analyzer\log_file_analyzer.py {{failed_bf["test"]["cache"]}}\test.log</pre><br />
+                                <b>TODO: add support for adding context to this failure</b><pre>python analyzer/log_file_analyzer.py {{failed_bf["test"]["cache"]}}\test.log</pre><br />
                                 {% endif %}
                             </div>
                         </div>

@@ -288,7 +288,7 @@ class bfg_analyzer(object):
         if len(faults) == 0:
             print("===========================")
             print("Analysis failed for test: " + self.pp.pformat(bf))
-            print("To Debug: python analyzer\\log_file_analyzer.py %s " % (log_file))
+            print("To Debug: python analyzer" + os.path.sep + "log_file_analyzer.py " + log_file)
             print("===========================")
         else:
             self.add_system_failure_comment(bf, log_file_url, faults)
@@ -342,7 +342,8 @@ class bfg_analyzer(object):
             if oom_analyzer is None:
                 print("===========================")
                 print("Analysis failed for test: " + self.pp.pformat(bf))
-                print("To Debug: python analyzer\\log_file_analyzer.py %s " % (log_file))
+                print("To Debug: python analyzer" + os.path.sep + "log_file_analyzer.py " +
+                      log_file)
                 print("===========================")
             else:
                 analyzer = oom_analyzer
@@ -401,7 +402,8 @@ class bfg_analyzer(object):
             if len(faults) == 0:
                 print("===========================")
                 print("Analysis failed for test: " + self.pp.pformat(bf))
-                print("To Debug: python analyzer\\timeout_file_analyzer.py %s " % (log_file))
+                print("To Debug: python analyzer" + os.path.sep + "timeout_file_analyzer.py " +
+                      log_file)
                 print("===========================")
 
             summary_str = analyzer.to_json()
@@ -436,7 +438,7 @@ class bfg_analyzer(object):
         if oom_analyzer is None:
             # If logkeeper is down, we will not have a log file :-(
             if test["log_file"] is not None and test["log_file"] != "" and "test/None" not in test[
-                    'log_file']:
+                    'log_file'] and "log url not available" not in test['log_file']:
 
                 if not os.path.exists(log_file):
                     buildbaron.analyzer.logkeeper.retieve_raw_log(test["log_file"], log_file)
@@ -488,7 +490,8 @@ class bfg_analyzer(object):
                 if len(faults) == 0:
                     print("===========================")
                     print("Analysis failed for test: " + self.pp.pformat(bf))
-                    print("To Debug: python analyzer\\log_file_analyzer.py %s " % (log_file))
+                    print("To Debug: python analyzer" + os.path.sep + "log_file_analyzer.py " +
+                          log_file)
                     print("===========================")
         else:
             # Well, we hit an oom, ignore the test
