@@ -12,7 +12,7 @@ import sys
 
 if __name__ == "__main__" and __package__ is None:
     sys.path.append(os.path.dirname(os.path.abspath(os.path.realpath(__file__))))
-    print (sys.path)
+    print(sys.path)
     import faultinfo
 else:
     from . import faultinfo
@@ -21,12 +21,13 @@ else:
 # LogFile - text stream
 # LogFileSplitter - split log file into output from (test, mongod, mongos, etc) streams
 
-ROOT="Root"
-MONGO_ROOT="MongoRoot"
-SHELL="Shell"
+ROOT = "Root"
+MONGO_ROOT = "MongoRoot"
+SHELL = "Shell"
 
 RE_SERVER = re.compile('^(([cds]|sh)[0-9]{5})')
 RE_SERVER_PREFIX = re.compile('^(([cds]|sh)[0-9]{5})\|')
+
 
 class LineInfo:
     def __init__(self, line_number, line):
@@ -50,9 +51,11 @@ class LineInfo:
     def __str__(self):
         return self.line
 
+
 class LogFileSplitter:
     """Splits various streams in a log file in separate files
     """
+
     def __init__(self, lstr):
         # Sinks
         # - no prefix
@@ -61,11 +64,13 @@ class LogFileSplitter:
         # --d20010, s...., c....
         #
         re_files = re.compile('^\[.*?\] ')
-        re_time = re.compile('^(-?(?:[1-9][0-9]*)?[0-9]{4})-(1[0-2]|0[1-9])-(3[01]|0[1-9]|[12][0-9])T(2[0-3]|[01][0-9]):([0-5][0-9]):([0-5][0-9])(\.[0-9]+)?(Z|[+-][0-9]{4})? ')
+        re_time = re.compile(
+            '^(-?(?:[1-9][0-9]*)?[0-9]{4})-(1[0-2]|0[1-9])-(3[01]|0[1-9]|[12][0-9])T(2[0-3]|[01][0-9]):([0-5][0-9]):([0-5][0-9])(\.[0-9]+)?(Z|[+-][0-9]{4})? '
+        )
         re_server = re.compile('^(([cds]|sh)[0-9]{5})\|')
 
         lines = lstr.splitlines()
-        self.splits = { ROOT : [], MONGO_ROOT : [], SHELL : [] }
+        self.splits = {ROOT: [], MONGO_ROOT: [], SHELL: []}
         line_number = 1
         for line in lines:
             files_match = re_files.match(line)
@@ -100,6 +105,7 @@ class LogFileSplitter:
     def getsplits(self):
         return self.splits
 
+
 class LogFileAnalyzer:
     def __init__(self, splits):
         self.splits = splits
@@ -114,7 +120,7 @@ class LogFileAnalyzer:
             for line in self.splits[key]:
                 line.set_start(start)
                 start = start + len(str(line)) + 1
-            
+
             self.joins[key] = '\n'.join([str(a) for a in self.splits[key]])
 
     def check_all(self, re_str):
@@ -124,7 +130,7 @@ class LogFileAnalyzer:
         for key in iter(self.splits):
             match = re_c.search(self.joins[key])
             if match:
-                matches.append({ "key" : key, "match" : match })
+                matches.append({"key": key, "match": match})
 
         return matches if len(matches) > 0 else None
 
@@ -147,14 +153,15 @@ class LogFileAnalyzer:
             else:
                 break
 
-        self.contexts.append(faultinfo.FaultInfo(key, category, context, line_info.get_line_number()))
+        self.contexts.append(
+            faultinfo.FaultInfo(key, category, context, line_info.get_line_number()))
 
     def analyze(self):
         # Check for SIGKILL, SIGABORT
         # StopError: MongoDB process on port 20012 exited with error code -6 :
 
         #if self.check_bad_exit():
-            # Check for MongoDB Errors like stack traces
+        # Check for MongoDB Errors like stack traces
         #    print "Bad Exit"
 
         # Check for "StopError"
@@ -164,7 +171,7 @@ class LogFileAnalyzer:
             #TODO add more info
             self.gather_context()
             return
-            
+
         # Check for memory corruption
         if self.check_tcmalloc_corruption():
             return
@@ -241,9 +248,9 @@ class LogFileAnalyzer:
                 for check in detail_checks:
                     check_match = re.search(check[1], log_str, flags=re.DOTALL)
                     if check_match:
-                        self.add_context(match["key"], check_match.start(), check[0], check_match.group(0))
+                        self.add_context(match["key"],
+                                         check_match.start(), check[0], check_match.group(0))
 
-        
     def gather_fasserts(self):
         # Tests can fail for reasons other then fasserts
         # like access violation
@@ -278,16 +285,19 @@ class LogFileAnalyzer:
 
     def gather_leaks(self):
         # JS tests do not directly fail due to the leak sanitizier
-        self.gather_context_re("LeakSanitizer",
-                               [["memory leaks", "LeakSanitizer: detected memory leaks.*?SUMMARY.*?\."]])
+        self.gather_context_re(
+            "LeakSanitizer",
+            [["memory leaks", "LeakSanitizer: detected memory leaks.*?SUMMARY.*?\."]])
 
     def gather_crashes(self):
         self.gather_context_re("Segmentation Fault",
                                [["segmentation fault", "Segmentation Fault.*?END BACKTRACE"]])
 
     def gather_tcmalloc_corruption(self):
-        self.gather_context_re("Found a corrupted memory buffer",
-                               [["tcmalloc memory corruption", "Found a corrupted memory buffer in MallocBlock.*?END BACKTRACE"]])
+        self.gather_context_re("Found a corrupted memory buffer", [[
+            "tcmalloc memory corruption",
+            "Found a corrupted memory buffer in MallocBlock.*?END BACKTRACE"
+        ]])
 
     def base_joins(self):
         """ Loop through all the streams for reasons why tests fail"""
@@ -301,7 +311,7 @@ class LogFileAnalyzer:
                 if check_match:
                     self.add_fault(stream_name, check_match.start(), check[0], check_match.group(0))
                     return True
-    
+
         return False
 
     def check_just_fatal_exit(self):
@@ -313,13 +323,20 @@ class LogFileAnalyzer:
                                     ["fassert", "aborting after fassert"]])
 
     def check_mongo_query_failure(self):
-        return self.check_fault_re([["mongo query failure", "Error: (explain|error doing query|map reduce failed|error:).*failed.*?js"]])
+        return self.check_fault_re([[
+            "mongo query failure",
+            "Error: (explain|error doing query|map reduce failed|error:).*failed.*?js"
+        ]])
 
     def check_failed_start(self):
-        return self.check_fault_re([["failed to start mongos", "Error: Failed to start mongos.*failed.*?js"]])
+        return self.check_fault_re(
+            [["failed to start mongos", "Error: Failed to start mongos.*failed.*?js"]])
 
     def check_failed_repl_wait(self):
-        return self.check_fault_re([["failed to wait for replication", "Error: waiting for replication timed out.*failed.*?js"]])
+        return self.check_fault_re([[
+            "failed to wait for replication",
+            "Error: waiting for replication timed out.*failed.*?js"
+        ]])
 
     def check_parallel_failed(self):
         return self.check_fault_re([["parallel test failed", "Parallel Test FAILED: .*"]])
@@ -334,24 +351,30 @@ class LogFileAnalyzer:
             # Match line by line
             assert_match = re.search("mongo.*?teardown.*?wasn't.", stream)
             if assert_match:
-                self.add_fault(stream_name, assert_match.start(), "teardown failed", assert_match.group(0))
+                self.add_fault(stream_name,
+                               assert_match.start(), "teardown failed", assert_match.group(0))
                 return True
 
         return False
 
     def check_just_leaks(self):
         # Unit tests directly fail due to the leak sanitizier
-        return self.check_fault_re([["memory leaks", "LeakSanitizer: detected memory leaks.*?SUMMARY.*?\."]])
+        return self.check_fault_re(
+            [["memory leaks", "LeakSanitizer: detected memory leaks.*?SUMMARY.*?\."]])
 
     def check_tcmalloc_corruption(self):
-        return self.check_fault_re([["tcmalloc memory corruption", "Found a corrupted memory buffer in MallocBlock.*?END BACKTRACE"]])
-    
+        return self.check_fault_re([[
+            "tcmalloc memory corruption",
+            "Found a corrupted memory buffer in MallocBlock.*?END BACKTRACE"
+        ]])
+
     def check_unit_tests(self):
         shell = self.joins[SHELL]
 
         assert_match = re.search("DONE running tests.*?FAILURE.*?failed", shell, flags=re.DOTALL)
         if assert_match:
-            self.add_fault(SHELL, assert_match.start(), "C++ Unit Test Failure", assert_match.group(0))
+            self.add_fault(SHELL,
+                           assert_match.start(), "C++ Unit Test Failure", assert_match.group(0))
             return True
         return False
 
@@ -359,10 +382,11 @@ class LogFileAnalyzer:
         for stream_name, stream in self.base_joins():
             assert_match = re.search("StopError:.*failed.*?js", stream, flags=re.DOTALL)
             if assert_match:
-                text = assert_match.group(0);
+                text = assert_match.group(0)
 
                 if "error code -1073741819" in text:
-                    self.add_fault(stream_name, assert_match.start(), "Windows_Access_Violation", text)
+                    self.add_fault(stream_name,
+                                   assert_match.start(), "Windows_Access_Violation", text)
                 elif "error code -6" in text:
                     self.add_fault(stream_name, assert_match.start(), "Process_Abort", text)
                 else:
@@ -381,25 +405,25 @@ class LogFileAnalyzer:
         return self.contexts
 
     def to_json(self):
-        d1 = { "faults" : self.faults,
-              "contexts" : self.contexts }
+        d1 = {"faults": self.faults, "contexts": self.contexts}
         return json.dumps(d1, cls=faultinfo.CustomEncoder)
+
 
 def main():
     parser = argparse.ArgumentParser(description='Process log file.')
 
-    parser.add_argument("files", type=str, nargs='+', help="the file to read" )
+    parser.add_argument("files", type=str, nargs='+', help="the file to read")
     args = parser.parse_args()
 
     for file in args.files:
-        
+
         with open(file, "rb") as lfh:
             log_file_str = lfh.read().decode('utf-8')
 
         LFS = LogFileSplitter(log_file_str)
 
         s = LFS.getsplits()
-    
+
         analyzer = LogFileAnalyzer(s)
 
         analyzer.analyze()
@@ -418,6 +442,7 @@ def main():
         print(analyzer.to_json())
 
         f = json.loads(analyzer.to_json(), cls=faultinfo.CustomDecoder)
+
 
 if __name__ == '__main__':
     main()

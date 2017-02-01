@@ -32,6 +32,7 @@ if __name__ == '__main__':
     #
     def format_log(s):
         return s.replace("\n", "<br/>")
+
     app.jinja_env.filters['format_log'] = format_log
 
     def hash_name(s):
