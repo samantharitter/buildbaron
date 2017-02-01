@@ -1,11 +1,16 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.25123.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "buildbaron", "buildbaron.pyproj", "{F5988600-7ECF-4C3D-AED5-E8B871799184}"
 EndProject
 Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "www", "www\www.pyproj", "{BC647E20-42D4-46DA-A898-4565B0D547DA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{688D913D-00A5-4B93-96A8-FA463D2EBA28}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -144,9 +144,10 @@
     <Content Include="www\static\scripts\_references.js" />
     <Content Include="www\templates\about.html" />
     <Content Include="www\templates\failure.html" />
-    <Content Include="www\templates\contact.html" />
+    <Content Include="www\templates\gone_away.html" />
     <Content Include="www\templates\index.html" />
     <Content Include="www\templates\layout.html" />
+    <Content Include="www\templates\duplicate.html" />
   </ItemGroup>
   <ItemGroup>
     <InterpreterReference Include="{9a7a9026-48c1-4688-9d5d-e5699d47d074}\3.5" />

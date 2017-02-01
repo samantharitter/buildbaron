@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 from __future__ import print_function, absolute_import
 
 import os
@@ -60,14 +60,16 @@ def parse_log(file):
 
             print("======================================")
             print("--------------------------------------")
-            print("Unique stacks: " + str(len(stack_map)) + " of ") + str(len(stacks))
+            print("Unique stacks: " + str(len(stack_map)) + " of " + str(len(stacks)))
             print("======================================")
 
             for stack in stack_map:
-                print("-------------- Count: %d") % (stack_map[stack])
+                print("-------------- Count: %d" % (stack_map[stack]))
                 print("\n".join(string.split(stack, ";")))
 
             stacks = []
+
+            print("//////////////////////////////////////")
 
         if in_stacks:
             if curLine.startswith("Thread "):
