@@ -21,7 +21,7 @@ stacks = []
 re_offset = re.compile("\+0x[0-9a-fA-F]+")
 while True:
     curLine = file.readline()
-    if(curLine == ""):
+    if (curLine == ""):
         break
     curLine = curLine.rstrip().lstrip()
 
@@ -29,17 +29,17 @@ while True:
 
     #print "%d, %s" % (in_stack, curLine)
     # Ignore comments
-    if(curLine.startswith("//")):
+    if (curLine.startswith("//")):
         continue
-    elif(curLine.startswith("***")):
+    elif (curLine.startswith("***")):
         continue
     elif curLine.startswith("Child-SP"):
         #New Stack
         # cur_stack.reverse()
         #print "stck"
-        stack_str = string.join(cur_stack, ";") 
+        stack_str = string.join(cur_stack, ";")
         stacks.append(stack_str)
-        
+
         cur_stack = []
         continue
     # Ignore blank lines, they separate allocations from stacks or stacks
