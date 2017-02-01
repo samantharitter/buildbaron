@@ -251,7 +251,7 @@ class bfg_analyzer(object):
         
         if len(faults) == 0:
             print("===========================")
-            print("Analysis failed for test: " + pp.pformat(bf))
+            print("Analysis failed for test: " + self.pp.pformat(bf))
             print("To Debug: python analyzer\\log_file_analyzer.py %s " % (log_file))
             print("===========================")
         else:
@@ -305,7 +305,7 @@ class bfg_analyzer(object):
             oom_analyzer = self.check_for_oom_killer(bf)
             if oom_analyzer is None:
                 print("===========================")
-                print("Analysis failed for test: " + pp.pformat(bf))
+                print("Analysis failed for test: " + self.pp.pformat(bf))
                 print("To Debug: python analyzer\\log_file_analyzer.py %s " % (log_file))
                 print("===========================")
             else:
@@ -364,7 +364,7 @@ class bfg_analyzer(object):
         
             if len(faults) == 0:
                 print("===========================")
-                print("Analysis failed for test: " + pp.pformat(bf))
+                print("Analysis failed for test: " + self.pp.pformat(bf))
                 print("To Debug: python analyzer\\timeout_file_analyzer.py %s " % (log_file))
                 print("===========================")
 
@@ -448,7 +448,7 @@ class bfg_analyzer(object):
 
                 if len(faults) == 0:
                     print("===========================")
-                    print("Analysis failed for test: " + pp.pformat(bf))
+                    print("Analysis failed for test: " + self.pp.pformat(bf))
                     print("To Debug: python analyzer\\log_file_analyzer.py %s " % (log_file))
                     print("===========================")
         else:
@@ -497,9 +497,8 @@ class bfg_analyzer(object):
 
         if len(comments) == 0:
             # Add a comment with what we learned
-            pp = pprint.PrettyPrinter()
             print("Reporting BF summary to Jira: %s - %s" % (str(bf), log_file_url))
-            pp.pformat(faults)
+            self.pp.pformat(faults)
 
             fault = faults[0]
 
