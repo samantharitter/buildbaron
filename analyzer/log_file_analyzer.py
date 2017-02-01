@@ -239,7 +239,7 @@ class LogFileAnalyzer:
                 log_str = self.joins[match["key"]]
 
                 for check in detail_checks:
-                    check_match = re.search(check[1], log, flags=re.DOTALL)
+                    check_match = re.search(check[1], log_str, flags=re.DOTALL)
                     if check_match:
                         self.add_context(match["key"], check_match.start(), check[0], check_match.group(0))
 

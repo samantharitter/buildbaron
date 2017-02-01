@@ -14,7 +14,7 @@ def jira_user():
     file = os.path.expanduser(DEFAULT_BB_CONFIG)
     if os.path.exists(file):
         with open(file, "rb") as sjh:
-            contents = sjh.read().decode('utf-8')
+            contents = sjh.read().decode('utf-8') 
             config = yaml.safe_load(contents)
 
         user = config['user']
