@@ -1,12 +1,11 @@
-#!/usr/bin/env python
-from __future__ import print_function, absolute_import
-
-import os
-import re
+#!/usr/bin/env python3
 import argparse
-import pprint
 import json
+import os
+import pprint
+import re
 import string
+
 
 def parse_log(file):
     re_files = re.compile('^\[.*?\] ')
@@ -23,7 +22,7 @@ def parse_log(file):
 
     while True:
         curLine = file.readline()
-        if(curLine == ""):
+        if curLine == "":
             break
         curLine = curLine.rstrip().lstrip()
 
@@ -34,15 +33,14 @@ def parse_log(file):
         # Found start of debuggers
         in_dbg = 1
 
-        
         if "Done analyzing process" in curLine:
             # Done With Debuggers
             in_dbg = 0
 
         # Strip Date Prefix
         curLine = re_files.sub("", curLine)
-        
-        if(curLine.startswith("***")):
+
+        if curLine.startswith("***"):
             continue
         elif curLine.startswith("Thread "):
             # Stacks start
@@ -60,23 +58,25 @@ def parse_log(file):
 
             print("======================================")
             print("--------------------------------------")
-            print("Unique stacks: " + str(len(stack_map)) + " of ") + str(len(stacks))
+            print("Unique stacks: " + str(len(stack_map)) + " of " + str(len(stacks)))
             print("======================================")
 
             for stack in stack_map:
-                print("-------------- Count: %d") % (stack_map[stack])
+                print("-------------- Count: %d" % (stack_map[stack]))
                 print("\n".join(string.split(stack, ";")))
 
             stacks = []
+
+            print("//////////////////////////////////////")
 
         if in_stacks:
             if curLine.startswith("Thread "):
                 #New Stack
                 # cur_stack.reverse()
                 #print("stck")
-                stack_str = string.join(cur_stack, ";") 
+                stack_str = string.join(cur_stack, ";")
                 stacks.append(stack_str)
-        
+
                 cur_stack = []
                 continue
             # Ignore blank lines, they separate allocations from stacks or stacks
@@ -93,16 +93,14 @@ def parse_log(file):
                 cur_stack.append(curLine)
 
 
-
 def main():
     parser = argparse.ArgumentParser(description='Process log file.')
 
-    parser.add_argument("files", type=str, nargs='+', help="the file to read" )
+    parser.add_argument("files", type=str, nargs='+', help="the file to read")
     args = parser.parse_args()
 
     for file in args.files:
-        parse_log(file)        
-
+        parse_log(file)
 
 
 if __name__ == '__main__':

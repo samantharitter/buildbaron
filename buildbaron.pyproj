@@ -5,7 +5,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{f5988600-7ecf-4c3d-aed5-e8b871799184}</ProjectGuid>
     <ProjectHome />
-    <StartupFile>evg_analyzer.py</StartupFile>
+    <StartupFile>bfg_analyzer.py</StartupFile>
     <SearchPath />
     <WorkingDirectory>.</WorkingDirectory>
     <OutputPath>.</OutputPath>
@@ -13,7 +13,8 @@
     <LaunchProvider>Standard Python launcher</LaunchProvider>
     <InterpreterId>{9a7a9026-48c1-4688-9d5d-e5699d47d074}</InterpreterId>
     <InterpreterVersion>3.5</InterpreterVersion>
-    <CommandLineArguments>cache\dab034af77b8fc5362babd23e7a6514ce4e31a8c\test.log</CommandLineArguments>
+    <CommandLineArguments>
+    </CommandLineArguments>
     <EnableNativeCodeDebugging>False</EnableNativeCodeDebugging>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'" />
@@ -23,22 +24,36 @@
     <PtvsTargetsFile>$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets</PtvsTargetsFile>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="analyzer\downloader.py">
+    <Compile Include="analyzer\analyzer_config.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="analyzer\evergreen_analyzer.py" />
-    <Compile Include="analyzer\jira_analyzer.py">
+    <Compile Include="analyzer\timeout_file_analyzer.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="analyzer\logkeeper.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="analyzer\evergreen.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="analyzer\evg_log_file_analyzer.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="analyzer\faultinfo.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="analyzer\jira_client.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="analyzer\log_file_analyzer.py" />
+    <Compile Include="bfg_analyzer.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="gdb_deadlock_analyzer.py" />
     <Compile Include="win_deadlock_analyzer.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="analyzer\__init__.py" />
-    <Compile Include="evg_analyzer.py">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="__init__.py" />
   </ItemGroup>
   <ItemGroup>

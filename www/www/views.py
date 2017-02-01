@@ -9,46 +9,65 @@ from flask import render_template, g
 from www import app
 import os
 import sys
+import threading
 
-sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(os.path.realpath(__file__))))))
-print (sys.path)
+sys.path.append(
+    os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(os.path.realpath(__file__))))))
+print(sys.path)
 
-lib_path = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(os.path.realpath(__file__)))))
+lib_path = os.path.dirname(
+    os.path.dirname(os.path.dirname(os.path.abspath(os.path.realpath(__file__)))))
 print(lib_path)
 
-import analyzer.jira_analyzer
+import analyzer.jira_client
+import analyzer.analyzer_config
+
 
 @app.route('/')
 @app.route('/home')
 def home():
     """Renders the home page."""
 
-    with open(os.path.join(lib_path, "failed_tests.json"), "rb") as sjh:
+    with open(os.path.join(lib_path, "failed_bfs.json"), "rb") as sjh:
         contents = sjh.read().decode('utf-8')
-        failed_tests = json.loads(contents)
+        failed_bfs_root = json.loads(contents)
+
+    query = failed_bfs_root['query']
+    date = failed_bfs_root['date']
+    failed_bfs = failed_bfs_root['bfs']
 
     return render_template(
         'index.html',
         title='Home Page',
-        year=datetime.now().year
-        #,failed_tests=g.get("failed_tests", None)
-        ,failed_tests=failed_tests
-    )
+        year=datetime.now().year,
+        failed_bfs=failed_bfs,
+        query=query,
+        date=date,
+        bf_count=len(failed_bfs))
+
 
 statusKeys = {
     "Blocked": 1,
     "Open": 1,
     "In Progress": 1,
+    'Waiting for bug fix': 1,
+    'Waiting For User Input': 1,
+    'In Code Review': 1,
+    "Needs Scope": 1,
+    "Requested": 1,
+    'Stuck': 1,
     "Closed": 2,
     "Resolved": 2,
+    "Completed": 2,
 }
+
 
 def issue_sort(issue):
 
-    k1 = statusKeys[issue.fields.status.name];
+    k1 = statusKeys[issue.fields.status.name]
 
-    if(k1 == 2):
-        if issue.fields.resolution.name == "Fixed":
+    if (k1 == 2):
+        if issue.fields.resolution is not None and issue.fields.resolution.name == "Fixed":
             k2 = 0
         else:
             k2 = 1
@@ -57,50 +76,98 @@ def issue_sort(issue):
 
     return "%d_%d" % (k1, k2)
 
+
+jira_client_cached = None
+jira_client_lock = threading.Lock()
+
+
+def get_jira_client():
+    global jira_client_cached
+    global jira_client_lock
+
+    with jira_client_lock:
+        if jira_client_cached is None:
+            print("Connecting to JIRA.....")
+            jira_client_cached = analyzer.jira_client.jira_client(
+                analyzer.analyzer_config.jira_server(), analyzer.analyzer_config.jira_user())
+        return jira_client_cached
+
+
 @app.route('/failure')
 def failure():
     """Renders the failure page."""
-    with open(os.path.join(lib_path, "failed_tests.json"), "rb") as sjh:
+    with open(os.path.join(lib_path, "failed_bfs.json"), "rb") as sjh:
         contents = sjh.read().decode('utf-8')
-        failed_tests = json.loads(contents)
+        failed_bfs = json.loads(contents)
+    global ja
 
-    task_id = request.args.get('task_id')
-    build_id = request.args.get('build_id')
+    issue = request.args.get('issue')
     test_name = request.args.get('test_name')
 
-    failed_test=None
+    failed_bf = None
 
-    print (task_id)
-    print (build_id)
-    print (test_name)
+    for ft in failed_bfs:
+        if ft["test"]["issue"] == issue and test_name == ft["test"]["name"]:
+            failed_bf = ft
 
-    for ft in failed_tests:
-        if ft["test"]["task_id"] == task_id and build_id == ft["test"]["task_name"] and test_name == ft["test"]["test"]:
-            failed_test = ft
-
-    ja = analyzer.jira_analyzer.jira_analyzer("https://jira.mongodb.com", os.getenv("JIRA_USER_NAME", "mark.benvenuto"))
-
-    issues = ja.query([build_id, os.path.basename(test_name)]);
+    # Predicates
+    jc = get_jira_client()
+    jira_query = jc.query_duplicates_text([os.path.basename(test_name), failed_bf['test']['suite']])
+    issues = jc.search_issues(jira_query)
 
     issues.sort(key=issue_sort)
+
+    is_system_failure = "System Failure" in failed_bf['test']['summary']
+
+    # Query for the last few issues the user has looked at
+    recent_issues_query = "issuekey in issueHistory() and project in (bf, server, evg, build) ORDER BY lastViewed DESC"
+    recent_issues = jc.search_issues(recent_issues_query)
+
+    recent_issues.sort(key=issue_sort)
 
     return render_template(
         'failure.html',
         title='Failure Details',
-        year=datetime.now().year
-        ,failed_test=failed_test
-        ,issues = issues
-    )
-
-@app.route('/contact')
-def contact():
-    """Renders the contact page."""
-    return render_template(
-        'contact.html',
-        title='Contact',
         year=datetime.now().year,
-        message='Your contact page.'
-    )
+        failed_bf=failed_bf,
+        issues=issues,
+        jira_query=jira_query,
+        recent_issues=recent_issues,
+        recent_issues_query=recent_issues_query,
+        is_system_failure=is_system_failure)
+
+
+@app.route('/close_duplicate')
+def close_duplicate():
+    """Renders the duplicate page."""
+
+    issue = request.args.get('issue')
+    duplicate_issue = request.args.get('duplicate_issue')
+
+    jc = get_jira_client()
+
+    jc.close_as_duplicate(issue, duplicate_issue)
+
+    return render_template(
+        'duplicate.html',
+        title='Ticket Closed',
+        year=datetime.now().year,
+        issue=issue,
+        duplicate_issue=duplicate_issue)
+
+
+@app.route('/close_goneaway')
+def close_goneaway():
+    """Renders the gone away page."""
+
+    issue = request.args.get('issue')
+
+    jc = get_jira_client()
+    jc.close_as_goneaway(issue)
+
+    return render_template(
+        'gone_away.html', title='Ticket Resolved', year=datetime.now().year, issue=issue)
+
 
 @app.route('/about')
 def about():
@@ -109,5 +176,4 @@ def about():
         'about.html',
         title='About',
         year=datetime.now().year,
-        message='Your application description page.'
-    )
+        message='Third Party License Notices')
