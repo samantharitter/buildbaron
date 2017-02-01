@@ -1,4 +1,5 @@
 import os
+
 import yaml
 
 DEFAULT_JIRA_SERVER = "https://jira.mongodb.org"
@@ -24,4 +25,3 @@ def jira_user():
 
 def evergreen_config_default_file():
     return os.path.expanduser("~/.evergreen.yml")
-

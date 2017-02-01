@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
-import os
-import re
 import argparse
-import pprint
 import json
+import os
+import pprint
+import re
 import string
+
 
 def parse_log(file):
     re_files = re.compile('^\[.*?\] ')

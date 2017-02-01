@@ -1,10 +1,13 @@
 """
 Classes and utility functions for accessing evergreen
 """
-import yaml
 import os.path
+
 import requests
+import yaml
+
 from . import analyzer_config
+
 
 class client(object):
     """HTTP client for evergreen api that uses users's Evergreen key"""

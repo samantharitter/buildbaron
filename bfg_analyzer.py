@@ -2,18 +2,18 @@
 """
 Script to analyze the Jira Build Baron Queue
 """
-import binascii
-import os
-import hashlib
-import re
 import argparse
-import pprint
-import json
+import binascii
 import getpass
-import string
-import urllib
+import hashlib
+import json
+import os
+import pprint
+import re
 import stat
+import string
 import sys
+
 import requests
 
 try:
@@ -28,13 +28,14 @@ if __name__ == "__main__" and __package__ is None:
     sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(os.path.realpath(__file__)))))
     print (sys.path)
 
-import buildbaron.analyzer.log_file_analyzer
-import buildbaron.analyzer.evg_log_file_analyzer
+import buildbaron.analyzer.analyzer_config
 import buildbaron.analyzer.evergreen
+import buildbaron.analyzer.evg_log_file_analyzer
+import buildbaron.analyzer.jira_client
+import buildbaron.analyzer.log_file_analyzer
 import buildbaron.analyzer.logkeeper
 import buildbaron.analyzer.timeout_file_analyzer
-import buildbaron.analyzer.analyzer_config
-import buildbaron.analyzer.jira_client
+
 
 # URL of the default Jira server.
 # If you use .com, it breaks horribly
@@ -152,7 +153,25 @@ class bfg_analyzer(object):
             self.process_bf(bf, results)
 
         return results;
-    
+
+    # TODO: parallelize the check_logs function with this since we are network bound
+    # builds = thread_map( lambda item : process_bf(base_url, item), commits)
+    def thread_map(func, items):
+        # We can use a with statement to ensure threads are cleaned up promptly
+        with concurrent.futures.ThreadPoolExecutor(max_workers=cpu_count() * 2) as executor:
+            # Start the load operations and mark each future with its URL
+            future_to_item = {executor.submit(func, item): item for item in items}
+            results = []
+            for future in concurrent.futures.as_completed(future_to_item):
+                item = future_to_item[future]
+                try:
+                    nf = future.result()
+                    if nf:
+                        results += nf
+                except Exception as exc:
+                    print('%r generated an exception: %s' % (item, exc))
+        return results
+
     def create_bf_cache(self, bf):
         """Create a directory to cache the log file in"""
         if not os.path.exists("cache"):
@@ -582,7 +601,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
-
-
-

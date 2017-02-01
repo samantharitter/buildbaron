@@ -3,6 +3,7 @@ Utility classes for reporting information from log file analyzers
 """
 import json
 
+
 # In the future, add tests cases for test result classification
 #
 class FaultInfo:

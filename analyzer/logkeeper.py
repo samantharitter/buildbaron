@@ -4,6 +4,7 @@ See https://github.com/evergreen-ci/logkeeper
 """
 import requests
 
+
 def retrieve_file(url, file):
     print("Retrieving: " + url);
 

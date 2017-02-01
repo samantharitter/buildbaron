@@ -4,9 +4,9 @@ Utilities for analyzing an evergreen task log file for timeouts.
 """
 import argparse
 import json
-import sys
 import os
 import re
+import sys
 
 if __name__ == "__main__" and __package__ is None:
     sys.path.append(os.path.dirname(os.path.abspath(os.path.realpath(__file__))))

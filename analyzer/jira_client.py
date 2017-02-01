@@ -1,14 +1,15 @@
 """
 Jira Client and utility operations
 """
-from jira import JIRA
-import os
-import re
 import argparse
-import pprint
-import json
 import getpass
+import json
+import os
+import pprint
+import re
 import threading
+
+from jira import JIRA
 
 try:
   import keyring
