@@ -98,8 +98,11 @@ def failure():
     """Renders the failure page."""
     with open(os.path.join(lib_path, "failed_bfs.json"), "rb") as sjh:
         contents = sjh.read().decode('utf-8')
-        failed_bfs = json.loads(contents)
-    global ja
+        failed_bfs_root = json.loads(contents)
+
+    query = failed_bfs_root['query']
+    date = failed_bfs_root['date']
+    failed_bfs = failed_bfs_root['bfs']
 
     issue = request.args.get('issue')
     test_name = request.args.get('test_name')
