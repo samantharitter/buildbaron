@@ -1,6 +1,8 @@
-jira
-gitpython
 Flask<1
+appdirs
+gitpython
+jira
 keyring
+packaging
 python-dateutil
 pyyaml
