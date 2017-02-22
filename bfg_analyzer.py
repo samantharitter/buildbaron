@@ -247,7 +247,7 @@ class bfg_analyzer(object):
 
         # If we've already analyzed this failure, don't do it again.
         if os.path.exists(summary_json_file):
-            with open(summary_json_file, "rb") as summary_file:
+            with open(summary_json_file, "r") as summary_file:
                 return json.loads(summary_file.read())
 
         system_log_url = buildbaron.analyzer.evergreen.task_get_system_raw_log(bf['task_url'])
