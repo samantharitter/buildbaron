@@ -11,7 +11,7 @@ Install python modules.
 pip3 install -r requirements.txt
 ```
 
-Ensure `evergreen.yml` is setup. For Jira identity, create a file `$HOME/buildbaron.yaml` with
+Ensure `evergreen.yml` is setup. For Jira identity, create a file `$HOME/.buildbaron.yaml` with
 ```
 user: <JIRA_USER_NAME>
 ```
