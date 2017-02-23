@@ -50,7 +50,7 @@ class jira_client(object):
             password = getpass.getpass("Jira Password:")
 
             if keyring:
-                answer = raw_input("Store password in system keyring? (y/N): ").strip()
+                answer = input("Store password in system keyring? (y/N): ").strip()
 
                 if answer == "y":
                     keyring.set_password(server, user, password)
