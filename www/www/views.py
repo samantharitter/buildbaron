@@ -171,6 +171,29 @@ def failure():
         is_system_failure=is_system_failure)
 
 
+@app.route('/close_duplicate_home_page', methods=['POST'])
+def close_duplicate_home_page():
+    """Closes a duplicate ticket from the home page."""
+
+    issue = request.json["issue"]
+    duplicate = request.json["duplicate"]
+
+    print("got request to close " + issue + " as a dup of " + duplicate)
+    try:
+        jc = get_jira_client()
+        jc.close_as_duplicate(issue, duplicate)
+
+        return "ok"
+
+    except analyzer.jira_client.JIRAError as err:
+        print(err)
+        message = "Couldn't close ticket: " + err.text
+
+        return message
+
+    return "ok"
+
+
 @app.route('/close_duplicate')
 def close_duplicate():
     """Renders the duplicate page."""

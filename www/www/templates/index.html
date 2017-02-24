@@ -39,8 +39,62 @@
                 <fieldset>
                 {% for failed_bf in failed_bfs %}
                 <tr>
-                    <td><input type="checkbox" name="issues" value="{{failed_bf["bfg_info"]["issue"]}}"/></td>
-                    <td><a href="https://jira.mongodb.org/browse/{{failed_bf["bfg_info"]["issue"]}}">{{failed_bf["bfg_info"]["issue"]}}</a><br />{{failed_bf["bfg_info"]["type"]}}</td>
+                    <td>
+                      <!-- Bulk close checkbox /-->
+                      <input type="checkbox" name="issues" value="{{failed_bf["bfg_info"]["issue"]}}"/>
+                    </td>
+
+                    <td>
+                      <!-- Issue name, and close-as-dup for this ticket only /-->
+                      <a href="https://jira.mongodb.org/browse/{{failed_bf["bfg_info"]["issue"]}}">
+                        {{failed_bf["bfg_info"]["issue"]}}
+                      </a>
+                      <br />
+                      {{failed_bf["bfg_info"]["type"]}}
+                      <br/><br/>
+
+                      <div id="dup-{{failed_bf['bfg_info']['issue']}}">
+                      <p>Duplicates: <input type="text" id="close-dup-{{failed_bf['bfg_info']['issue']}}" /></p>
+                      <p><button type="button" class="btn btn-danger" id="close-dup-btn-{{failed_bf['bfg_info']['issue']}}">Close</button></p>
+                      </div>
+
+                      <script>
+                        $( "#close-dup-btn-{{failed_bf['bfg_info']['issue']}}" ).click(function() {
+                        var issue = "{{failed_bf['bfg_info']['issue']}}";
+                        var duplicate = $( "#close-dup-{{failed_bf['bfg_info']['issue']}}" ).val();
+
+                        var s = "Closing " + issue + " as duplicate of " + duplicate;
+
+                        var data = {
+                        "issue" : issue,
+                        "duplicate" : duplicate,
+                        };
+
+                        $.ajax({
+                        url: "/close_duplicate_home_page",
+                        data: JSON.stringify(data, null, '\t'),
+                        contentType: 'application/json;charset=UTF-8',
+                        type: 'POST',
+                        success: function(response) {
+
+                        // if we succeeded, remove button
+                        if (response == "ok") {
+                        $( "#dup-{{failed_bf['bfg_info']['issue']}}" ).html("Closed.");
+                        } else {
+                        $( "#dup-{{failed_bf['bfg_info']['issue']}}" ).prepend(response);
+                        }
+                        },
+                        error: function(error) {
+                        console.log(error);
+                        $( "#dup-{{failed_bf['bfg_info']['issue']}}" ).html(error);
+                        }
+                        });
+
+                        });
+                      </script>
+
+                    </td>
+
                     <td>{{failed_bf["bfg_info"]["name"]}}
                         <div class="container">
                             <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#{{(failed_bf["bfg_info"]["summary"] + failed_bf["bfg_info"]["name"])|hash_name}}">Expand Details</button>
