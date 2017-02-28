@@ -41,7 +41,7 @@
                 <tr>
                     <td>
                       <!-- Bulk close checkbox /-->
-                      <input type="checkbox" name="issues" value="{{failed_bf["bfg_info"]["issue"]}}"/>
+                      <input type="checkbox" name="issues" class="bf-bulk-checkbox" value="{{failed_bf["bfg_info"]["issue"]}}"/>
                     </td>
 
                     <td>
@@ -171,6 +171,21 @@
         close and enter the issue key of the duplicated ticket in the
         textbox.
     </p>
+    Select all: <input type="checkbox" id="bulk-close-select-all" />
+    <p id="bulk-close-select-all-warning" style="color:red;"></p>
+
+    <script>
+      $("#bulk-close-select-all").click(function() {
+         if ($(this).prop("checked")) {
+            $("#bulk-close-select-all-warning").html("WARNING: about to close all tickets, are you sure?!");
+            $(".bf-bulk-checkbox").prop("checked", true);
+         } else {
+            $("#bulk-close-select-all-warning").html("");
+            $(".bf-bulk-checkbox").prop("checked", false);
+         }
+      });
+    </script>
+
     <p>Duplicated issue key: <input type="text" name="duplicated_ticket" /></p>
     <p><input type="submit" class="btn btn-danger" value="Bulk Close!" /></p>
 </div>
