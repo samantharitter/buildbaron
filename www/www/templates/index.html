@@ -22,6 +22,43 @@
     <h4>Query: <text class="code-line">{{query}}</text></h4>
 </div>
 
+<!-- Text search /-->
+<div id="bfg-text-search-error"></div>
+Search summaries: <input type="text" class="full-width-text-input" id="bfg-text-search" size="400"/>
+&nbsp;&nbsp;<button type="button" class="btn btn-danger" id="bfg-text-search-btn">Search</button>
+
+<br/><br/>
+
+<script>
+  $( "#bfg-text-search-btn" ).click(function() {
+  var text = $( "#bfg-text-search" ).val();
+  if (!text) {
+  $( "#bfg-text-search-error" ).html("Please enter valid text.");
+  return;
+  }
+
+  var data = {
+  "text" : text,
+  };
+
+  $.ajax({
+  url: "/bfg_text_search",
+  data: JSON.stringify(data, null, '\t'),
+  contentType: 'application/json;charset=UTF-8',
+  type: 'POST',
+  success: function(response) {
+  $("html").empty();
+  $("html").append(response);
+  },
+  error: function(error) {
+     console.log(error);
+  }
+  });
+
+  });
+</script>
+
+
 <form method="POST" action="/bulk_close_duplicate">
 <div class="row">
     <div class=".col-lg-12">
