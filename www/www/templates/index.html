@@ -31,28 +31,28 @@ Search summaries: <input type="text" class="full-width-text-input" id="bfg-text-
 
 <script>
   $( "#bfg-text-search-btn" ).click(function() {
-  var text = $( "#bfg-text-search" ).val();
-  if (!text) {
-  $( "#bfg-text-search-error" ).html("Please enter valid text.");
-  return;
+      var text = $( "#bfg-text-search" ).val();
+      if (!text) {
+          $( "#bfg-text-search-error" ).html("Please enter valid text.");
+      return;
   }
 
   var data = {
-  "text" : text,
+      "text" : text,
   };
 
   $.ajax({
-  url: "/bfg_text_search",
-  data: JSON.stringify(data, null, '\t'),
-  contentType: 'application/json;charset=UTF-8',
-  type: 'POST',
-  success: function(response) {
-  $("html").empty();
-  $("html").append(response);
-  },
-  error: function(error) {
-     console.log(error);
-  }
+      url: "/bfg_text_search",
+      data: JSON.stringify(data, null, '\t'),
+      contentType: 'application/json;charset=UTF-8',
+      type: 'POST',
+      success: function(response) {
+          $("html").empty();
+          $("html").append(response);
+      },
+      error: function(error) {
+          console.log(error);
+      }
   });
 
   });
@@ -97,36 +97,35 @@ Search summaries: <input type="text" class="full-width-text-input" id="bfg-text-
 
                       <script>
                         $( "#close-dup-btn-{{failed_bf['bfg_info']['issue']}}" ).click(function() {
-                        var issue = "{{failed_bf['bfg_info']['issue']}}";
-                        var duplicate = $( "#close-dup-{{failed_bf['bfg_info']['issue']}}" ).val();
+                            var issue = "{{failed_bf['bfg_info']['issue']}}";
+                            var duplicate = $( "#close-dup-{{failed_bf['bfg_info']['issue']}}" ).val();
 
-                        var s = "Closing " + issue + " as duplicate of " + duplicate;
+                            var s = "Closing " + issue + " as duplicate of " + duplicate;
 
-                        var data = {
-                        "issue" : issue,
-                        "duplicate" : duplicate,
-                        };
+                            var data = {
+                                "issue" : issue,
+                                "duplicate" : duplicate,
+                            };
 
-                        $.ajax({
-                        url: "/close_duplicate_home_page",
-                        data: JSON.stringify(data, null, '\t'),
-                        contentType: 'application/json;charset=UTF-8',
-                        type: 'POST',
-                        success: function(response) {
+                            $.ajax({
+                                url: "/close_duplicate_home_page",
+                                data: JSON.stringify(data, null, '\t'),
+                                contentType: 'application/json;charset=UTF-8',
+                                type: 'POST',
+                                success: function(response) {
 
-                        // if we succeeded, remove button
-                        if (response == "ok") {
-                        $( "#dup-{{failed_bf['bfg_info']['issue']}}" ).html("Closed.");
-                        } else {
-                        $( "#dup-{{failed_bf['bfg_info']['issue']}}" ).prepend(response);
-                        }
-                        },
-                        error: function(error) {
-                        console.log(error);
-                        $( "#dup-{{failed_bf['bfg_info']['issue']}}" ).html(error);
-                        }
-                        });
-
+                                    // if we succeeded, remove button
+                                    if (response == "ok") {
+                                        $( "#dup-{{failed_bf['bfg_info']['issue']}}" ).html("Closed.");
+                                    } else {
+                                        $( "#dup-{{failed_bf['bfg_info']['issue']}}" ).prepend(response);
+                                    }
+                                },
+                                error: function(error) {
+                                console.log(error);
+                                    $( "#dup-{{failed_bf['bfg_info']['issue']}}" ).html(error);
+                                }
+                            });
                         });
                       </script>
 
@@ -213,13 +212,13 @@ Search summaries: <input type="text" class="full-width-text-input" id="bfg-text-
 
     <script>
       $("#bulk-close-select-all").click(function() {
-         if ($(this).prop("checked")) {
-            $("#bulk-close-select-all-warning").html("WARNING: about to close all tickets, are you sure?!");
-            $(".bf-bulk-checkbox").prop("checked", true);
-         } else {
-            $("#bulk-close-select-all-warning").html("");
-            $(".bf-bulk-checkbox").prop("checked", false);
-         }
+          if ($(this).prop("checked")) {
+              $("#bulk-close-select-all-warning").html("WARNING: about to close all tickets, are you sure?!");
+              $(".bf-bulk-checkbox").prop("checked", true);
+          } else {
+              $("#bulk-close-select-all-warning").html("");
+              $(".bf-bulk-checkbox").prop("checked", false);
+          }
       });
     </script>
 
